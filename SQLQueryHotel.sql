@@ -5,6 +5,10 @@ USE HotelDB;
 Go
 
 IF OBJECT_ID('dbo.tblManager') IS NOT NULL DROP TABLE dbo.tblManager;
+IF OBJECT_ID('dbo.tblEmployee') IS NOT NULL DROP TABLE dbo.tblEmployee;
+IF OBJECT_ID('dbo.tblUser') IS NOT NULL DROP TABLE dbo.tblUser;
+IF OBJECT_ID('dbo.vwManager') IS NOT NULL DROP VIEW dbo.vwManager;
+IF OBJECT_ID('dbo.vwEmployee') IS NOT NULL DROP VIEW dbo.vwEmployee;
 GO
 
 GO
@@ -13,6 +17,7 @@ CREATE TABLE tblUser(
 	Name nvarchar(50),
 	Surname nvarchar(50),
 	DateOfBirth date,
+	Email nvarchar(20),
 	Username nvarchar(40) UNIQUE,
 	Password nvarchar(150)
 );
@@ -49,3 +54,4 @@ CREATE VIEW vwEmployee AS
 			tblEmployee.Responsability, tblEmployee.Salary, tblEmployee.EmployeeID
 	FROM tblUser, tblEmployee
 	WHERE tblUser.UserId = tblEmployee.UserId
+

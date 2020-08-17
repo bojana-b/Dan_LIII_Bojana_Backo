@@ -1,0 +1,70 @@
+﻿<Window x:Class="Dan_LIII_Bojana_Backo.View.AddManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dan_LIII_Bojana_Backo.View"
+        mc:Ignorable="d"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        xmlns:converter="clr-namespace:Dan_LIII_Bojana_Backo"
+        Title="Add Manager" Height="600" Width="300" FontSize="14"
+        Background="AntiqueWhite" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <x:Array Type="sys:String" x:Key="Floor">
+            <sys:String>First</sys:String>
+            <sys:String>Second</sys:String>
+            <sys:String>Third</sys:String>
+            <sys:String>Fourth</sys:String>
+            <sys:String>Fifth</sys:String>
+        </x:Array>
+        <x:Array Type="sys:String" x:Key="Qualification">
+            <sys:String>I</sys:String>
+            <sys:String>II</sys:String>
+            <sys:String>III</sys:String>
+            <sys:String>IV</sys:String>
+            <sys:String>V</sys:String>
+            <sys:String>VI</sys:String>
+            <sys:String>VII</sys:String>
+        </x:Array>
+    </Window.Resources>
+    <Grid>
+        <GroupBox Header="Personal Data" Margin="10" Padding="10" Background="AntiqueWhite">
+            <StackPanel>
+                <TextBlock>First name:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock>Last name:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Surname, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock>Date of Birth:</TextBlock>
+                <DatePicker Height="25">
+                    <DatePicker.Text>
+                        <Binding Path="DateOfBirth" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.Converter>
+                                <converter:DateConverter/>
+                            </Binding.Converter>
+                        </Binding>
+                    </DatePicker.Text>
+                </DatePicker>
+                <TextBlock>E-mail:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Email, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock>Username:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Username, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock>Password:</TextBlock>
+                <PasswordBox Name="txtPassword" Background="RosyBrown" Foreground="White" FontSize="18"/>
+                <TextBlock>Hotel Floor</TextBlock>
+                <ComboBox Background="RosyBrown"
+                          ItemsSource="{StaticResource ResourceKey=Floor}"
+                          SelectedItem="{Binding Manager.Floor, UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
+                <TextBlock>Work Experience:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Experience}"/>
+                <TextBlock>Professional Qualifications Level:</TextBlock>
+                <ComboBox Background="RosyBrown"
+                          ItemsSource="{StaticResource ResourceKey=Qualification}"
+                          SelectedItem="{Binding Manager.Qualifications, UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
+                <Button  Margin="80, 20" Command="{Binding Save}" CommandParameter="{Binding ElementName=txtPassword}">Save</Button>
+                <Button Margin="80, 10" Command="{Binding Cancel}">Cancel</Button>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>
