@@ -1,4 +1,4 @@
-﻿<Window x:Class="Dan_LIII_Bojana_Backo.View.AddManager"
+﻿<Window x:Class="Dan_LIII_Bojana_Backo.View.AddEmployee"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:sys="clr-namespace:System;assembly=mscorlib" 
         xmlns:converter="clr-namespace:Dan_LIII_Bojana_Backo"
-        Title="Add Manager" Height="600" Width="300" FontSize="14"
+        Title="Add Employee" Height="700" Width="300" FontSize="14"
         Background="AntiqueWhite" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <x:Array Type="sys:String" x:Key="Floor">
@@ -17,25 +17,28 @@
             <sys:String>Fourth</sys:String>
             <sys:String>Fifth</sys:String>
         </x:Array>
-        <x:Array Type="sys:String" x:Key="Qualification">
-            <sys:String>I</sys:String>
-            <sys:String>II</sys:String>
-            <sys:String>III</sys:String>
-            <sys:String>IV</sys:String>
-            <sys:String>V</sys:String>
-            <sys:String>VI</sys:String>
-            <sys:String>VII</sys:String>
+        <x:Array Type="sys:String" x:Key="Responsability">
+            <sys:String>Cleaning</sys:String>
+            <sys:String>Cooking</sys:String>
+            <sys:String>Monitoring</sys:String>
+            <sys:String>Reporting</sys:String>
+        </x:Array>
+        <x:Array Type="sys:String" x:Key="Gender">
+            <sys:String>M</sys:String>
+            <sys:String>F</sys:String>
+            <sys:String>O</sys:String>
+            <sys:String>X</sys:String>
         </x:Array>
     </Window.Resources>
     <Grid>
         <GroupBox Header="Personal Data" Margin="10" Padding="10" Background="AntiqueWhite">
             <StackPanel>
                 <TextBlock>First name:</TextBlock>
-                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Employee.Name, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock>Last name:</TextBlock>
-                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Surname, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Employee.Surname, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock>Date of Birth:</TextBlock>
-                <DatePicker Height="25" SelectedDate="{Binding Manager.DateOfBirth}">
+                <DatePicker Height="25" SelectedDate="{Binding Employee.DateOfBirth}">
                     <DatePicker.Text>
                         <Binding Path="DateOfBirth" UpdateSourceTrigger="PropertyChanged">
                             <Binding.Converter>
@@ -45,22 +48,27 @@
                     </DatePicker.Text>
                 </DatePicker>
                 <TextBlock>E-mail:</TextBlock>
-                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Email, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Employee.Email, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock>Username:</TextBlock>
-                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Username, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Employee.Username, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock>Password:</TextBlock>
                 <PasswordBox Name="txtPassword" Background="RosyBrown" Foreground="White" FontSize="18"/>
                 <TextBlock>Hotel Floor</TextBlock>
                 <ComboBox Background="RosyBrown"
                           ItemsSource="{StaticResource ResourceKey=Floor}"
-                          SelectedItem="{Binding Manager.Floor, UpdateSourceTrigger=PropertyChanged}">
+                          SelectedItem="{Binding Employee.Floor, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
-                <TextBlock>Work Experience:</TextBlock>
-                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Manager.Experience}"/>
-                <TextBlock>Professional Qualifications Level:</TextBlock>
+                <TextBlock>Gender:</TextBlock>
                 <ComboBox Background="RosyBrown"
-                          ItemsSource="{StaticResource ResourceKey=Qualification}"
-                          SelectedItem="{Binding Manager.Qualifications, UpdateSourceTrigger=PropertyChanged}">
+                          ItemsSource="{StaticResource ResourceKey=Gender}"
+                          SelectedItem="{Binding Employee.Gender, UpdateSourceTrigger=PropertyChanged}">
+                </ComboBox>
+                <TextBlock>Citizenship:</TextBlock>
+                <TextBox Background="RosyBrown" Foreground="White" Text="{Binding Employee.Citizenship, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock>Responsability:</TextBlock>
+                <ComboBox Background="RosyBrown"
+                          ItemsSource="{StaticResource ResourceKey=Responsability}"
+                          SelectedItem="{Binding Employee.Responsability, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
                 <Button  Margin="80, 20" Command="{Binding Save}" CommandParameter="{Binding ElementName=txtPassword}">Save</Button>
                 <Button Margin="80, 10" Command="{Binding Cancel}">Cancel</Button>

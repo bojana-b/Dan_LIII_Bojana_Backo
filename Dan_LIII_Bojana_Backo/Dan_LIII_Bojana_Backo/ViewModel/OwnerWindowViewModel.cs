@@ -19,6 +19,7 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
             ownerWindow = ownerWindowOpen;
         }
 
+        // AddManager button
         private ICommand addManager;
         public ICommand AddManager
         {
@@ -45,6 +46,36 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
             }
         }
         private bool CanAddManagerExecute()
+        {
+            return true;
+        }
+        // AddEmployee button
+        private ICommand addEmployee;
+        public ICommand AddEmployee
+        {
+            get
+            {
+                if (addEmployee == null)
+                {
+                    addEmployee = new RelayCommand(param => addEmployeeExecute(), param => CanAddEmployeeExecute());
+                }
+                return addEmployee;
+            }
+        }
+        private void addEmployeeExecute()
+        {
+            try
+            {
+                AddEmployee addEmployee = new AddEmployee();
+                ownerWindow.Close();
+                addEmployee.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanAddEmployeeExecute()
         {
             return true;
         }

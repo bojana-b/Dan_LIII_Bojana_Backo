@@ -1,7 +1,9 @@
 ﻿using Dan_LIII_Bojana_Backo.Command;
+using Dan_LIII_Bojana_Backo.Service;
 using Dan_LIII_Bojana_Backo.View;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,27 +16,45 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
     class LoginScreenViewModel : ViewModelBase
     {
         LoginScreen loginScreen;
+        public static List<string> userPass;
+        ServiceManager serviceManager;
 
         public LoginScreenViewModel(LoginScreen loginScreenOpen)
         {
             loginScreen = loginScreenOpen;
-
+            userPass = new List<string>();
+            ReadUsernameAndPasswordFromFile();
+            serviceManager = new ServiceManager();
+            manager = new vwManager();
+            managerList = serviceManager.GetAllManagers().ToList();
         }
         #region Properties
-        //private tblClinic clinic;
-        //public tblClinic Clinic
-        //{
-        //    get
-        //    {
-        //        return clinic;
-        //    }
-        //    set
-        //    {
-        //        clinic = value;
-        //        OnPropertyChanged("Clinic");
-        //    }
-        //}
-
+        private vwManager manager;
+        public vwManager Manager
+        {
+            get
+            {
+                return manager;
+            }
+            set
+            {
+                manager = value;
+                OnPropertyChanged("Manager");
+            }
+        }
+        private List<vwManager> managerList;
+        public List<vwManager> ManagerList
+        {
+            get
+            {
+                return managerList;
+            }
+            set
+            {
+                managerList = value;
+                OnPropertyChanged("ManagerList");
+            }
+        }
         //private tblUser user;
         //public tblUser User
         //{
@@ -63,20 +83,6 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
                 OnPropertyChanged("UserName");
             }
         }
-
-        //public string Error
-        //{
-        //    get { return null; }
-        //}
-
-        //public string this[string someProperty]
-        //{
-        //    get
-        //    {
-
-        //        return string.Empty;
-        //    }
-        //}
         #endregion
 
         #region Commands
@@ -98,32 +104,27 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
         {
             try
             {
-                //ReadUsernameAndPasswordFromFile();
                 string password = (obj as PasswordBox).Password;
-
-                if (UserName.Equals("Vlasnik2020") && password.Equals("Vlasnik2020"))
+                if (UserName.Equals(userPass.ElementAt(1)) && password.Equals(userPass.ElementAt(3)))
                 {
                     OwnerWindow master = new OwnerWindow();
                     loginScreen.Close();
                     master.ShowDialog();
                 }
-                //else if (serviceManager.IsUser(UserName))
-                //{
-                //    Manager = serviceManager.FindManager(UserName);
-                //    if (SecurePasswordHasher.Verify(password, Manager.UserPassword) || password == Manager.ReservedPassword)
-                //    {
-                //        if (Manager.LevelOfResponsibility == null)
-                //        {
-                //            MessageBox.Show("Can't login until the Admin assigns you a level of Responsability.");
-                //        }
-                //        else
-                //        {
-                //            ManagerWindow managerWindow = new ManagerWindow();
-                //            loginScreen.Close();
-                //            managerWindow.ShowDialog();
-                //        }
-                //    }
-                //}
+                else if (serviceManager.IsUser(UserName))
+                {
+                    Manager = serviceManager.FindManager(UserName);
+                    if (SecurePasswordHasher.Verify(password, Manager.Password))
+                    {
+                        ManagerWindow managerWindow = new ManagerWindow();
+                        loginScreen.Close();
+                        managerWindow.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong usename or password!");
+                    }
+                }
                 //else if (serviceAdmin.IsUser(UserName))
                 //{
                 //    Admin = serviceAdmin.FindAdmin(UserName);
@@ -190,5 +191,34 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
             return true;
         }
         #endregion
+
+        // Function that read Owner username and password
+        void ReadUsernameAndPasswordFromFile()
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader(@"..\..\OwnerAccess.txt"))
+                {
+                    string line;
+                    string[] arr;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        arr = line.Split();
+                        for (int i = 0; i < arr.Length; i++)
+                        {
+                            userPass.Add(arr[i]);
+                        }
+                    }
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine($"The file was not found: '{e}'");
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"The file could not be opened: '{e}'");
+            }
+        }
     }
 }

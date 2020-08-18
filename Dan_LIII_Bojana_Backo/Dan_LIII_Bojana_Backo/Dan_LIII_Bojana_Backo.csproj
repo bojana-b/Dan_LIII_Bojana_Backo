@@ -81,6 +81,7 @@
       <DependentUpon>ModelHotel.edmx</DependentUpon>
     </Compile>
     <Compile Include="SecurePasswordHasher.cs" />
+    <Compile Include="Service\ServiceEmployee.cs" />
     <Compile Include="Service\ServiceManager.cs" />
     <Compile Include="tblEmployee.cs">
       <DependentUpon>ModelHotel.tt</DependentUpon>
@@ -91,15 +92,23 @@
     <Compile Include="tblUser.cs">
       <DependentUpon>ModelHotel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AddEmployeeViewModel.cs" />
     <Compile Include="ViewModel\AddManagerViewModel.cs" />
     <Compile Include="ViewModel\LoginScreenViewModel.cs" />
+    <Compile Include="ViewModel\ManagerWindowViewModel.cs" />
     <Compile Include="ViewModel\OwnerWindowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\AddEmployee.xaml.cs">
+      <DependentUpon>AddEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddManager.xaml.cs">
       <DependentUpon>AddManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginScreen.xaml.cs">
       <DependentUpon>LoginScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManagerWindow.xaml.cs">
+      <DependentUpon>ManagerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OwnerWindow.xaml.cs">
       <DependentUpon>OwnerWindow.xaml</DependentUpon>
@@ -123,11 +132,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AddEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoginScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ManagerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

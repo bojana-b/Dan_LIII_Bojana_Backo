@@ -12,30 +12,29 @@ using System.Windows.Input;
 
 namespace Dan_LIII_Bojana_Backo.ViewModel
 {
-    class AddManagerViewModel : ViewModelBase
+    class AddEmployeeViewModel : ViewModelBase
     {
-        AddManager addManager;
-        ServiceManager serviceManager;
+        AddEmployee addEmployee;
+        ServiceEmployee serviceEmployee;
 
-        public AddManagerViewModel(AddManager addManagerOpen)
+        public AddEmployeeViewModel(AddEmployee addEmployeeOpen)
         {
-            addManager = addManagerOpen;
-            serviceManager = new ServiceManager();
-            manager = new vwManager();
+            addEmployee = addEmployeeOpen;
+            serviceEmployee = new ServiceEmployee();
+            employee = new vwEmployee();
         }
-
         #region Properties
-        private vwManager manager;
-        public vwManager Manager
+        private vwEmployee employee;
+        public vwEmployee Employee
         {
             get
             {
-                return manager;
+                return employee;
             }
             set
             {
-                manager = value;
-                OnPropertyChanged("Manager");
+                employee = value;
+                OnPropertyChanged("Employee");
             }
         }
         private DateTime dateOfBirth = DateTime.Now;
@@ -72,10 +71,11 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
             try
             {
                 string password = (obj as PasswordBox).Password;
-                Manager.Password = password;
+                Employee.Password = password;
+                Employee.Salary = 12300.ToString();
                 LoginScreen login = new LoginScreen();
-                serviceManager.AddManager(Manager);
-                addManager.Close();
+                serviceEmployee.AddEmployee(Employee);
+                addEmployee.Close();
                 MessageBox.Show("Account created!");
                 login.ShowDialog();
             }
@@ -119,7 +119,7 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
             try
             {
                 LoginScreen login = new LoginScreen();
-                addManager.Close();
+                addEmployee.Close();
                 login.Show();
             }
             catch (Exception ex)
