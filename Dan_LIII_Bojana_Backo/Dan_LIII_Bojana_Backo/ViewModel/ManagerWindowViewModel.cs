@@ -101,7 +101,7 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
             {
                 if (Employee != null)
                 {
-                    Salary salaryDefined = new Salary(Employee);
+                    Salary salaryDefined = new Salary(Employee, Manager);
                     salaryDefined.ShowDialog();
                     if((salaryDefined.DataContext as SalaryViewModel).IsUpdateEmployee == true)
                     {

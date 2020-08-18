@@ -12,10 +12,11 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
         Salary salary;
         ServiceEmployee serviceEmployee;
 
-        public SalaryViewModel(Salary salaryOpen, vwEmployee employeeEdit)
+        public SalaryViewModel(Salary salaryOpen, vwEmployee employeeEdit, vwManager managerLog)
         {
             salary = salaryOpen;
             employee = employeeEdit;
+            manager = managerLog;
             serviceEmployee = new ServiceEmployee();
         }
 
@@ -33,17 +34,30 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
                 OnPropertyChanged("Employee");
             }
         }
-        private string salaryCreate;
-        public string SalaryCreate
+        private vwManager manager;
+        public vwManager Manager
         {
             get
             {
-                return salaryCreate;
+                return manager;
             }
             set
             {
-                salaryCreate = value;
-                OnPropertyChanged("SalaryCreate");
+                manager = value;
+                OnPropertyChanged("Manager");
+            }
+        }
+        private int number;
+        public int Number
+        {
+            get
+            {
+                return number;
+            }
+            set
+            {
+                number = value;
+                OnPropertyChanged("Number");
             }
         }
 
@@ -79,6 +93,11 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
         {
             try
             {
+                if (Number <= 1 || Number > 1000)
+                {
+                    MessageBox.Show("X must be in range of (1, 1000).");
+                    return;
+                }
                 employee.Salary = salaryCalculation().ToString();
                 serviceEmployee.EditEmployee(Employee);
                 isUpdateEmployee = true;
@@ -125,9 +144,17 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
 
         public double salaryCalculation()
         {
-            string sal = salaryCreate;
-            double final = double.Parse(sal) * 0.75 * 1.12 * 0.15 * 5 * 0.75 * 5;
-            return final;
+            int sal = Number;
+            if (Employee.Gender.Equals("M"))
+            {
+                double final = sal * 0.75 * ((double)Manager.Experience) * 1.12 * 0.15 * 5;
+                return final;
+            }
+            else
+            {
+                double final = sal * 0.75 * ((double)Manager.Experience) * 1.15 * 0.15 * 5;
+                return final;
+            }            
         }
     }
 }

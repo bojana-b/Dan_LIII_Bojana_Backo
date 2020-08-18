@@ -27,7 +27,7 @@
             </Grid.RowDefinitions>
             <Label Grid.Column="1" Grid.Row="1" Name="lblX" Content="X:" Padding="0" HorizontalAlignment="Right"/>
             <TextBox Grid.Column="3" Grid.Row="1" Name="txtX" Height="30" Width="200" 
-                 Text="{Binding SalaryCreate, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Grid.Column="3" Grid.Row="3" Name="btnSave" Content="Save" Height="30" Width="70" HorizontalAlignment="Left"
                 Command="{Binding Save, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Grid.Column="3" Grid.Row="3" Name="btnCancel" Content="Cancel" Height="30" Width="70" HorizontalAlignment="Right"

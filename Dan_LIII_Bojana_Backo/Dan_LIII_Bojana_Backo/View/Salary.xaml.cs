@@ -20,10 +20,10 @@ namespace Dan_LIII_Bojana_Backo.View
     /// </summary>
     public partial class Salary : Window
     {
-        public Salary(vwEmployee employeEdit)
+        public Salary(vwEmployee employeEdit, vwManager managerLog)
         {
             InitializeComponent();
-            this.DataContext = new SalaryViewModel(this, employeEdit);
+            this.DataContext = new SalaryViewModel(this, employeEdit, managerLog);
         }
     }
 }
