@@ -158,5 +158,24 @@ namespace Dan_LIII_Bojana_Backo.Service
                 return null;
             }
         }
+
+        // Method to get all floores where exists an Manager
+        public List<string> GetManagerFloor()
+        {
+            try
+            {
+                using (HotelDBEntities context = new HotelDBEntities())
+                {
+                    List<string> floor = (from e in context.vwManagers select e.Floor).ToList();
+
+                    return floor;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
     }
 }

@@ -46,14 +46,14 @@ namespace Dan_LIII_Bojana_Backo.Service
             }
         }
         // Method that reads all Employees from database
-        public List<vwEmployee> GetAllEmployees()
+        public List<vwEmployee> GetAllEmployees(string managerFloor)
         {
             try
             {
                 using (HotelDBEntities context = new HotelDBEntities())
                 {
                     List<vwEmployee> list = new List<vwEmployee>();
-                    list = (from x in context.vwEmployees select x).ToList();
+                    list = (from x in context.vwEmployees where x.Floor == managerFloor select x).ToList();
                     //for (int i = 0; i < list.Count; i++)
                     //{
                     //    if (list[i].Stored == true)
@@ -62,6 +62,52 @@ namespace Dan_LIII_Bojana_Backo.Service
                     //    }
                     //}
                     return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
+        // Method that update Employee
+        public vwEmployee EditEmployee(vwEmployee employee)
+        {
+            try
+            {
+                using (HotelDBEntities context = new HotelDBEntities())
+                {
+                    tblUser userToEdit = (from ss in context.tblUsers where ss.UserId == employee.UserId select ss).First();
+
+                    userToEdit.Name = employee.Name;
+                    userToEdit.Surname = employee.Surname;
+                    userToEdit.DateOfBirth = employee.DateOfBirth;
+                    userToEdit.Email = employee.Email;
+                    userToEdit.Username = employee.Username;
+                    userToEdit.Password = employee.Password;
+
+                    userToEdit.UserId = employee.UserId;
+
+                    tblUser userEdit = (from ss in context.tblUsers
+                                        where ss.UserId == employee.UserId
+                                        select ss).First();
+                    context.SaveChanges();
+
+                    tblEmployee employeeToEdit = (from ss in context.tblEmployees where ss.UserId == employee.UserId select ss).First();
+
+                    employeeToEdit.Floor = employee.Floor;
+                    employeeToEdit.Gender = employee.Gender;
+                    employeeToEdit.Citizenship = employee.Citizenship;
+                    employeeToEdit.Responsability = employee.Responsability;
+                    employeeToEdit.Salary = employee.Salary;
+
+                    employeeToEdit.EmployeeID = employee.EmployeeID;
+
+                    tblEmployee employeeEdit = (from ss in context.tblEmployees
+                                                where ss.EmployeeID == employee.EmployeeID
+                                                select ss).First();
+                    context.SaveChanges();
+                    return employee;
                 }
             }
             catch (Exception ex)

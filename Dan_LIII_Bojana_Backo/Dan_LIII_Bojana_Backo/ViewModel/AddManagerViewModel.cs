@@ -2,10 +2,6 @@
 using Dan_LIII_Bojana_Backo.Service;
 using Dan_LIII_Bojana_Backo.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -87,18 +83,17 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
 
         private bool CanSaveExecute(object obj)
         {
-            //if (String.IsNullOrEmpty(Admin.FirstName) || String.IsNullOrEmpty(Admin.LastName)
-            //    || String.IsNullOrEmpty(Admin.IdentificationCard) || String.IsNullOrEmpty(Admin.Gender)
-            //    || String.IsNullOrEmpty(Admin.Citizenship)
-            //    || String.IsNullOrEmpty(Admin.Username) || String.IsNullOrEmpty((obj as PasswordBox).Password))
-            //{
-            //    return false;
-            //}
-            //else
-            //{
-            //    return true;
-            //}
-            return true;
+            if (String.IsNullOrEmpty(Manager.Name) || String.IsNullOrEmpty(Manager.Surname)
+                || String.IsNullOrEmpty(Manager.Email) || String.IsNullOrEmpty(Manager.Floor)
+                || String.IsNullOrEmpty(Manager.Qualifications) || String.IsNullOrEmpty(Manager.Experience.ToString())
+                || String.IsNullOrEmpty(Manager.Username) || String.IsNullOrEmpty((obj as PasswordBox).Password))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         // Cancel Button

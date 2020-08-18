@@ -16,12 +16,16 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
     {
         AddEmployee addEmployee;
         ServiceEmployee serviceEmployee;
+        ServiceManager serviceManager;
+        List<string> floorManager;
 
         public AddEmployeeViewModel(AddEmployee addEmployeeOpen)
         {
             addEmployee = addEmployeeOpen;
             serviceEmployee = new ServiceEmployee();
+            serviceManager = new ServiceManager();
             employee = new vwEmployee();
+            floorManager = serviceManager.GetManagerFloor().ToList();
         }
         #region Properties
         private vwEmployee employee;
@@ -70,14 +74,28 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
         {
             try
             {
+                bool existsFloor = false;
                 string password = (obj as PasswordBox).Password;
                 Employee.Password = password;
-                Employee.Salary = 12300.ToString();
-                LoginScreen login = new LoginScreen();
-                serviceEmployee.AddEmployee(Employee);
-                addEmployee.Close();
-                MessageBox.Show("Account created!");
-                login.ShowDialog();
+                for (int i = 0; i < floorManager.Count; i++)
+                {
+                    if (Employee.Floor == floorManager[i])
+                    {
+                        existsFloor = true;
+                    }
+                }
+                if (existsFloor)
+                {
+                    LoginScreen login = new LoginScreen();
+                    serviceEmployee.AddEmployee(Employee);
+                    addEmployee.Close();
+                    MessageBox.Show("Account created!");
+                    login.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("There is no Manager for that floor. Can not hire an employee!");
+                }
             }
             catch (Exception ex)
             {
@@ -87,18 +105,19 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
 
         private bool CanSaveExecute(object obj)
         {
-            //if (String.IsNullOrEmpty(Admin.FirstName) || String.IsNullOrEmpty(Admin.LastName)
-            //    || String.IsNullOrEmpty(Admin.IdentificationCard) || String.IsNullOrEmpty(Admin.Gender)
-            //    || String.IsNullOrEmpty(Admin.Citizenship)
-            //    || String.IsNullOrEmpty(Admin.Username) || String.IsNullOrEmpty((obj as PasswordBox).Password))
-            //{
-            //    return false;
-            //}
-            //else
-            //{
-            //    return true;
-            //}
-            return true;
+            if (String.IsNullOrEmpty(Employee.Name) || String.IsNullOrEmpty(Employee.Surname)
+                || String.IsNullOrEmpty(Employee.Email) || String.IsNullOrEmpty(Employee.Gender)
+                || String.IsNullOrEmpty(Employee.Floor) || String.IsNullOrEmpty(Employee.Citizenship)
+                || String.IsNullOrEmpty(Employee.Responsability)
+                || String.IsNullOrEmpty(Employee.Username) || String.IsNullOrEmpty((obj as PasswordBox).Password))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            //return true;
         }
 
         // Cancel Button

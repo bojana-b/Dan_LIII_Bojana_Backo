@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace Dan_LIII_Bojana_Backo.View
 {
     /// <summary>
-    /// Interaction logic for ManagerWindow.xaml
+    /// Interaction logic for Salary.xaml
     /// </summary>
-    public partial class ManagerWindow : Window
+    public partial class Salary : Window
     {
-        public ManagerWindow(vwManager managerLog)
+        public Salary(vwEmployee employeEdit)
         {
             InitializeComponent();
-            this.DataContext = new ManagerWindowViewModel(this, managerLog);
+            this.DataContext = new SalaryViewModel(this, employeEdit);
         }
     }
 }

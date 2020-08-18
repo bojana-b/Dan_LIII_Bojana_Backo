@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dan_LIII_Bojana_Backo.View"
         mc:Ignorable="d"
-        Title="Manager" Background="AntiqueWhite" Height="450" Width="520" FontSize="14">
+        Title="Manager" Background="AntiqueWhite" Height="450" Width="520" 
+        FontSize="14" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -28,20 +29,18 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid Grid.Column="1" Grid.Row="1" Height="auto" Width="auto">
-            <Button x:Name="productBtn" Content="Add new Product" Height="30" Width="150" VerticalAlignment="Top" 
-                Command="{Binding AddProduct, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock FontSize="20" Text="{Binding Manager.Name, StringFormat='WELCOME \{0\}!'}"></TextBlock>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="3" Height="auto" Width="auto">
-            <DataGrid x:Name="DataGridResults" ItemsSource="{Binding ProductList, UpdateSourceTrigger=PropertyChanged}"
-                      SelectedItem="{Binding Product, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HeadersVisibility="Column"
+            <DataGrid x:Name="DataGridResults" ItemsSource="{Binding EmployeeList, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding Employee, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HeadersVisibility="Column"
                       AutoGenerateColumns="False" HorizontalGridLinesBrush="Black" BorderBrush="Black" Foreground="Black">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Product ID" Binding="{Binding ProductID}"/>
-                    <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}"/>
-                    <DataGridTextColumn Header="Code" Binding="{Binding ProductCode}"/>
-                    <DataGridTextColumn Header="Product Quantity" Binding="{Binding Quantity}"/>
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
-                    <DataGridTextColumn Header="Stored" Binding="{Binding Stored}"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
+                    <DataGridTextColumn Header="Floor" Binding="{Binding Floor}"/>
+                    <DataGridTextColumn Header="Responsability" Binding="{Binding Responsability}"/>
+                    <DataGridTextColumn Header="Salary" Binding="{Binding Salary}"/>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
@@ -51,11 +50,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="updateBtn" Content="Update" 
-                                            Command="{Binding DataContext.Update, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
-                                        UpdateSourceTrigger=PropertyChanged}"/>
-                                    <Button x:Name="removeBtn" Content="Remove" 
-                                            Command="{Binding DataContext.Remove, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
+                                    <Button x:Name="updateBtn" Content="Def. Salary" 
+                                            Command="{Binding DataContext.SalaryDef, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}},
                                         UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -63,6 +59,9 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+        </Grid>
+        <Grid Grid.Column="1" Grid.Row="5" Height="auto" Width="auto">
+            <Button Margin="80, 10" Command="{Binding Cancel}">Cancel</Button>
         </Grid>
     </Grid>
 </Window>

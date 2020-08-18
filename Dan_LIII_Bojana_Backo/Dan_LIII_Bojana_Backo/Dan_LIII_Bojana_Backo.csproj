@@ -97,6 +97,7 @@
     <Compile Include="ViewModel\LoginScreenViewModel.cs" />
     <Compile Include="ViewModel\ManagerWindowViewModel.cs" />
     <Compile Include="ViewModel\OwnerWindowViewModel.cs" />
+    <Compile Include="ViewModel\SalaryViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\AddEmployee.xaml.cs">
       <DependentUpon>AddEmployee.xaml</DependentUpon>
@@ -112,6 +113,9 @@
     </Compile>
     <Compile Include="View\OwnerWindow.xaml.cs">
       <DependentUpon>OwnerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Salary.xaml.cs">
+      <DependentUpon>Salary.xaml</DependentUpon>
     </Compile>
     <Compile Include="vwEmployee.cs">
       <DependentUpon>ModelHotel.tt</DependentUpon>
@@ -149,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OwnerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Salary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

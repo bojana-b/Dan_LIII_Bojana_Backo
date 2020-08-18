@@ -116,7 +116,7 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
                     Manager = serviceManager.FindManager(UserName);
                     if (SecurePasswordHasher.Verify(password, Manager.Password))
                     {
-                        ManagerWindow managerWindow = new ManagerWindow();
+                        ManagerWindow managerWindow = new ManagerWindow(Manager);
                         loginScreen.Close();
                         managerWindow.ShowDialog();
                     }

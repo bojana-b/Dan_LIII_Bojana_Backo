@@ -17,14 +17,14 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
         ServiceManager serviceManager;
         ServiceEmployee serviceEmployee;
 
-        public ManagerWindowViewModel(ManagerWindow managerWindowOpen)
+        public ManagerWindowViewModel(ManagerWindow managerWindowOpen, vwManager managerLog)
         {
             managerWindow = managerWindowOpen;
+            manager = managerLog;
 
             serviceEmployee = new ServiceEmployee();
             serviceManager = new ServiceManager();
-            manager = new vwManager();
-            employeeList = serviceEmployee.GetAllEmployees().ToList();
+            employeeList = serviceEmployee.GetAllEmployees(manager.Floor).ToList();
         }
 
         #region Properties
@@ -67,110 +67,100 @@ namespace Dan_LIII_Bojana_Backo.ViewModel
                 OnPropertyChanged("EmployeeList");
             }
         }
+        private bool isUpdateEmployee;
+        public bool IsUpdateEmployee
+        {
+            get
+            {
+                return isUpdateEmployee;
+            }
+            set
+            {
+                isUpdateEmployee = value;
+            }
+        }
         #endregion
 
         #region Commands 
-        //private ICommand remove;
-        //public ICommand Remove
-        //{
-        //    get
-        //    {
-        //        if (remove == null)
-        //        {
-        //            remove = new RelayCommand(param => RemoveExecute(), param => CanRemoveExecute());
-        //        }
-        //        return remove;
-        //    }
-        //}
+        private ICommand salaryDef;
+        public ICommand SalaryDef
+        {
+            get
+            {
+                if (salaryDef == null)
+                {
+                    salaryDef = new RelayCommand(param => salaryDefExecute(), param => CanSalaryDefExecute());
+                }
+                return salaryDef;
+            }
+        }
 
-        //private void RemoveExecute()
-        //{
-        //    try
-        //    {
-        //        if (Product != null)
-        //        {
+        private void salaryDefExecute()
+        {
+            try
+            {
+                if (Employee != null)
+                {
+                    Salary salaryDefined = new Salary(Employee);
+                    salaryDefined.ShowDialog();
+                    if((salaryDefined.DataContext as SalaryViewModel).IsUpdateEmployee == true)
+                    {
+                        EmployeeList = serviceEmployee.GetAllEmployees(manager.Floor).ToList();
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanSalaryDefExecute()
+        {
+            if (Employee == null)
+            {
+                return false;
+            }
+            else if (employee.Responsability.Equals("Cleaning") || employee.Responsability.Equals("Cooking"))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
-        //            MessageBoxResult result = MessageBox.Show("Are you sure that you want to remove this product?",
-        //               "My App",
-        //                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-        //            int productID = product.ProductID;
-
-        //            switch (result)
-        //            {
-        //                case MessageBoxResult.Yes:
-        //                    string textForFile = String.Format("Deleted product {0} {1} {2}", product.ProductID,
-        //                        product.ProductName, product.ProductCode);
-        //                    eventObject.OnActionPerformed(textForFile);
-        //                    service.DeleteProduct(productID);
-        //                    ProductList = service.GetAllProducts().ToList();
-        //                    break;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //}
-        //private bool CanRemoveExecute()
-        //{
-        //    if (Product == null)
-        //    {
-        //        return false;
-        //    }
-        //    else if (product.Stored == true)
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        return true;
-        //    }
-        //}
-
-        //private ICommand update;
-        //public ICommand Update
-        //{
-        //    get
-        //    {
-        //        if (update == null)
-        //        {
-        //            update = new RelayCommand(param => UpdateExecute(), param => CanUpdateExecute());
-        //        }
-        //        return update;
-        //    }
-        //}
-
-        //private void UpdateExecute()
-        //{
-        //    try
-        //    {
-        //        if (Update != null)
-        //        {
-        //            UpdateProduct updateProduct = new UpdateProduct(Product);
-        //            updateProduct.ShowDialog();
-        //            if ((updateProduct.DataContext as UpdateProductViewModel).IsUpdateProduct == true)
-        //            {
-        //                ProductList = service.GetAllProducts().ToList();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.ToString());
-        //    }
-        //}
-        //private bool CanUpdateExecute()
-        //{
-        //    if (Product == null)
-        //    {
-        //        return false;
-        //    }
-        //    else
-        //    {
-        //        return true;
-        //    }
-        //}
+        // Cancel Button
+        private ICommand cancel;
+        public ICommand Cancel
+        {
+            get
+            {
+                if (cancel == null)
+                {
+                    cancel = new RelayCommand(param => CancelExecute(), param => CanCancelExecute());
+                }
+                return cancel;
+            }
+        }
+        private void CancelExecute()
+        {
+            try
+            {
+                LoginScreen login = new LoginScreen();
+                managerWindow.Close();
+                login.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private bool CanCancelExecute()
+        {
+            return true;
+        }
         #endregion 
     }
 }
